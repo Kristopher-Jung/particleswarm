@@ -10,4 +10,4 @@ Bunch of prticles will fly to mouse cursor. You can play with spread, number, an
 
 https://kristopher-jung.github.io/particleswarm/
 
-![Alt text](dist/particleswarmdemo.gif)
+![Alt text](docs/particleswarmdemo.gif)
