@@ -1,17 +1,13 @@
-# Three.js Starter
-Courtesy of Bruno Simon of https://threejs-journey.xyz/
+# particleswarm
 
-## Setup
-Download [Node.js](https://nodejs.org/en/download/).
-Run this followed commands:
+Cool animated mouse cursor made with ThreeJs.
 
-``` bash
-# Install dependencies (only the first time)
-npm install
+# Description
 
-# Run the local server at localhost:8080
-npm run dev
+Bunch of prticles will fly to mouse cursor. You can play with spread, number, and speed of particles.
 
-# Build for production in the dist/ directory
-npm run build
-```
+# Demo
+
+https://kristopher-jung.github.io/particleswarm/
+
+![Alt text](docs/particleswarmdemo.gif)
