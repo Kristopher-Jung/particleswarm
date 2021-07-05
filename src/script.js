@@ -7,7 +7,7 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 // setting
 let setting = {
-    particleSpread: 100,
+    particleSpread: 500,
     particleSpeed: 0.005,
     nParticle: 25000,
     particleSize: 0.05
@@ -148,7 +148,12 @@ gui.add(setting, 'nParticle').min(0).max(100000).step(1000).onChange(() => {
     }
     createParticles(setting.nParticle)
 })
-gui.add(setting, 'particleSpeed').min(0.001).max(0.1).step(0.001)
+gui.add(setting, 'particleSpeed').min(0.001).max(0.1).step(0.001).onChange(() => {
+    for (let i = 0; i < setting.nParticle; i++) {
+        ts[i] = 0
+        dt[i] = setting.particleSpeed * Math.random()
+    }
+})
 const tick = () => {
     for (let i = 0; i < setting.nParticle; i++) {
         ts[i] += dt[i]
@@ -169,25 +174,26 @@ const tick = () => {
     // calculate objects intersecting the picking ray
     const intersects = rayCaster.intersectObjects(scene.children);
     for (let intersect of intersects) {
-        const x = intersect.index;
-        const y = intersect.index + 1;
-        const z = intersect.index + 2;
+        const x = intersect.index
+        const y = intersect.index + 1
+        const z = intersect.index + 2
         particleGeometry.attributes.position.array[x] = (Math.random() - 0.5) * setting.particleSpread;
         particleGeometry.attributes.position.array[y] = (Math.random() - 0.5) * setting.particleSpread;
         particleGeometry.attributes.position.array[z] = (Math.random() - 0.5) * setting.particleSpread;
         ts[intersect.index] = 0
+        dt[intersect.index] = setting.particleSpeed * Math.random()
     }
     particleGeometry.attributes.position.needsUpdate = true
-    if(camera.position.x > 100) {
-        camera.position.x = 0
-    } else {
-        camera.position.x += (sphere.position.x - camera.position.x) * 0.01;
-    }
-    if(camera.position.y > 100) {
-        camera.position.y = 0
-    } else {
-        camera.position.y += (-sphere.position.y - camera.position.y) * 0.01;
-    }
+    // if(camera.position.x > 100) {
+    //     camera.position.x = 0
+    // } else {
+    //     camera.position.x += (sphere.position.x - camera.position.x) * 0.01;
+    // }
+    // if(camera.position.y > 100) {
+    //     camera.position.y = 0
+    // } else {
+    //     camera.position.y += (-sphere.position.y - camera.position.y) * 0.01;
+    // }
     camera.lookAt(scene.position);
     renderer.render(scene, camera)
     window.requestAnimationFrame(tick)
